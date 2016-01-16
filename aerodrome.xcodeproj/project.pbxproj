@@ -1,0 +1,277 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CE2FA55B1C46BF770016F4A0 /* AirPort.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE81BC161C36FA4F007771DB /* AirPort.framework */; };
+		CE81BC041C36CC85007771DB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81BC031C36CC85007771DB /* main.m */; };
+		CE81BC0B1C36CEC4007771DB /* aerodrome.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81BC0A1C36CEC4007771DB /* aerodrome.m */; settings = {ASSET_TAGS = (); }; };
+		CE81BC0E1C36CF41007771DB /* ioctl_functions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81BC0D1C36CF41007771DB /* ioctl_functions.m */; settings = {ASSET_TAGS = (); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CE81BBFE1C36CC85007771DB /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		CE2FA5571C401CB60016F4A0 /* Apple80211.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apple80211.framework; path = ../../../../../System/Library/PrivateFrameworks/Apple80211.framework; sourceTree = "<group>"; };
+		CE81BC001C36CC85007771DB /* aerodrome */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = aerodrome; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE81BC031C36CC85007771DB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		CE81BC0A1C36CEC4007771DB /* aerodrome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = aerodrome.m; sourceTree = "<group>"; };
+		CE81BC0C1C36CEEA007771DB /* aerodrome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aerodrome.h; sourceTree = "<group>"; };
+		CE81BC0D1C36CF41007771DB /* ioctl_functions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ioctl_functions.m; sourceTree = "<group>"; };
+		CE81BC0F1C36D012007771DB /* apple80211_ioctl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = apple80211_ioctl.h; sourceTree = "<group>"; };
+		CE81BC101C36D012007771DB /* apple80211_var.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = apple80211_var.h; sourceTree = "<group>"; };
+		CE81BC111C36D012007771DB /* apple80211_wps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = apple80211_wps.h; sourceTree = "<group>"; };
+		CE81BC121C36D012007771DB /* Apple80211.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Apple80211.h; sourceTree = "<group>"; };
+		CE81BC131C36D012007771DB /* Apple80211Err.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Apple80211Err.h; sourceTree = "<group>"; };
+		CE81BC161C36FA4F007771DB /* AirPort.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AirPort.framework; path = ../../../../../System/Library/PrivateFrameworks/AirPort.framework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CE81BBFD1C36CC85007771DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE2FA55B1C46BF770016F4A0 /* AirPort.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CE81BBF71C36CC85007771DB = {
+			isa = PBXGroup;
+			children = (
+				CE2FA5571C401CB60016F4A0 /* Apple80211.framework */,
+				CE81BC161C36FA4F007771DB /* AirPort.framework */,
+				CE81BC021C36CC85007771DB /* aerodrome-cli */,
+				CE81BC011C36CC85007771DB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CE81BC011C36CC85007771DB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CE81BC001C36CC85007771DB /* aerodrome */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CE81BC021C36CC85007771DB /* aerodrome-cli */ = {
+			isa = PBXGroup;
+			children = (
+				CE81BC0F1C36D012007771DB /* apple80211_ioctl.h */,
+				CE81BC101C36D012007771DB /* apple80211_var.h */,
+				CE81BC111C36D012007771DB /* apple80211_wps.h */,
+				CE81BC121C36D012007771DB /* Apple80211.h */,
+				CE81BC131C36D012007771DB /* Apple80211Err.h */,
+				CE81BC031C36CC85007771DB /* main.m */,
+				CE81BC0C1C36CEEA007771DB /* aerodrome.h */,
+				CE81BC0A1C36CEC4007771DB /* aerodrome.m */,
+				CE81BC0D1C36CF41007771DB /* ioctl_functions.m */,
+			);
+			path = "aerodrome-cli";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CE81BBFF1C36CC85007771DB /* aerodrome */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE81BC071C36CC85007771DB /* Build configuration list for PBXNativeTarget "aerodrome" */;
+			buildPhases = (
+				CE81BBFC1C36CC85007771DB /* Sources */,
+				CE81BBFD1C36CC85007771DB /* Frameworks */,
+				CE81BBFE1C36CC85007771DB /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = aerodrome;
+			productName = "aerodrome-cli";
+			productReference = CE81BC001C36CC85007771DB /* aerodrome */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CE81BBF81C36CC85007771DB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = home;
+				TargetAttributes = {
+					CE81BBFF1C36CC85007771DB = {
+						CreatedOnToolsVersion = 7.0.1;
+					};
+				};
+			};
+			buildConfigurationList = CE81BBFB1C36CC85007771DB /* Build configuration list for PBXProject "aerodrome" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = CE81BBF71C36CC85007771DB;
+			productRefGroup = CE81BC011C36CC85007771DB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CE81BBFF1C36CC85007771DB /* aerodrome */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CE81BBFC1C36CC85007771DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE81BC0B1C36CEC4007771DB /* aerodrome.m in Sources */,
+				CE81BC0E1C36CF41007771DB /* ioctl_functions.m in Sources */,
+				CE81BC041C36CC85007771DB /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		CE81BC051C36CC85007771DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		CE81BC061C36CC85007771DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		CE81BC081C36CC85007771DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
+				PRODUCT_NAME = aerodrome;
+			};
+			name = Debug;
+		};
+		CE81BC091C36CC85007771DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
+				PRODUCT_NAME = aerodrome;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CE81BBFB1C36CC85007771DB /* Build configuration list for PBXProject "aerodrome" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE81BC051C36CC85007771DB /* Debug */,
+				CE81BC061C36CC85007771DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE81BC071C36CC85007771DB /* Build configuration list for PBXNativeTarget "aerodrome" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE81BC081C36CC85007771DB /* Debug */,
+				CE81BC091C36CC85007771DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CE81BBF81C36CC85007771DB /* Project object */;
+}
