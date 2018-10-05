@@ -218,19 +218,22 @@ char * get_opmode()
     return (ret);
 }
 
+int APPLE80211_MODE_11AC = 0x80;
+
 char * get_phymode()
 {
     
-    char *modes[8] =
+    char *modes[9] =
     {
         "unknown",
         "auto",
         "802.11a",
         "802.11b",
         "802.11g",
-        "82.11n",
+        "802.11n",
         "turbo a",
-        "turbo g"
+        "turbo g",
+        "802.11ac"
     };
     
     //uint32_t phy;
@@ -259,6 +262,8 @@ char * get_phymode()
         return (modes[6]);
     } else if (phy.active_phy_mode  == APPLE80211_MODE_TURBO_G) {
         return (modes[7]);
+    } else if (phy.active_phy_mode == APPLE80211_MODE_11AC) {
+        return (modes[8]);
     }
     return (modes[0]);
 }
