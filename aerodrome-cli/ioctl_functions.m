@@ -92,39 +92,36 @@ int set_locale(uint32_t locale)
 
 char *get_locale()
 {
-    
     uint32_t locale_code = 0;
-    static char *locale = "UNKNOWN";
-    static char *lc[7] =
-    {
-        "UNKNOWN",
-        "X0 (FCC)",
-        "X3 (ETSI)",
-        "JP (JAPAN)",
-        "KOREA",
-        "X1 (APAC)",
-        "X2 (ROW)"
-    };
-    
     a80211_getset(SIOCGA80211, 28, &locale_code, NULL, 0);
-    if (locale_code == APPLE80211_LOCALE_UNKNOWN) {
-        locale = lc[0];
-    } else if (locale_code == APPLE80211_LOCALE_FCC){
-        locale = lc[1];
-    } else if (locale_code == APPLE80211_LOCALE_ETSI){
-        locale = lc[2];
-    } else if (locale_code == APPLE80211_LOCALE_JAPAN){
-        locale = lc[3];
-    } else if (locale_code == APPLE80211_LOCALE_KOREA){
-        locale = lc[4];
-    } else if (locale_code == APPLE80211_LOCALE_APAC){
-        locale = lc[5];
-    } else if (locale_code == APPLE80211_LOCALE_ROW){
-        locale = lc[6];
+    
+    switch (locale_code) {
+        case APPLE80211_LOCALE_UNKNOWN:
+            return "UNKNOWN";
+            break;
+        case APPLE80211_LOCALE_FCC:
+            return "X0 (FCC)";
+            break;
+        case APPLE80211_LOCALE_ETSI:
+            return "X3 (ETSI)";
+            break;
+        case APPLE80211_LOCALE_JAPAN:
+            return "JP (JAPAN)";
+            break;
+        case APPLE80211_LOCALE_KOREA:
+            return "KOREA";
+            break;
+        case APPLE80211_LOCALE_APAC:
+            return "X1 (APAC)";
+            break;
+        case APPLE80211_LOCALE_ROW:
+            return "X3 (ROW)";
+            break;
+            
+        default:
+            return "Unrecognized";
+            break;
     }
-    
-    return (locale);
-    
     
 }
 
