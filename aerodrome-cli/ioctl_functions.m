@@ -149,34 +149,29 @@ int set_txpower(uint32_t power)
 
 char * get_state()
 {
-    char *ret = "unknown";
-    char *states[5] =
-    {
-        "default",
-        "scanning",
-        "authenticating",
-        "associating",
-        "running"
-    };
-    
     uint32_t st = 0;
     a80211_getset(SIOCGA80211, APPLE80211_IOC_STATE, &st, NULL, 0);
     
-    if (st == APPLE80211_S_INIT) {
-        ret = states[0];
-    } else if (st == APPLE80211_S_SCAN){
-        ret = states[1];
-    } else if (st == APPLE80211_S_AUTH){
-        ret = states[2];
-    } else if (st == APPLE80211_S_ASSOC){
-        ret = states[3];
-    } else if (st == APPLE80211_S_RUN){
-        ret = states[4];
+    switch (st) {
+        case APPLE80211_S_INIT:
+            return "default";
+            break;
+        case APPLE80211_S_SCAN:
+            return "scanning";
+            break;
+        case APPLE80211_S_AUTH:
+            return "authenticating";
+            break;
+        case APPLE80211_S_ASSOC:
+            return "associating";
+            break;
+        case APPLE80211_S_RUN:
+            return "running";
+            break;
+        default:
+            return "unknown";
+            break;
     }
-    
-    
-    return (ret);
-    
 }
 
 char * get_opmode()
