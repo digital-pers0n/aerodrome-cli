@@ -176,88 +176,75 @@ char * get_state()
 
 char * get_opmode()
 {
-    char *ret = "none";
-    
-    char *modes[6] =
-    {
-        "none",
-        "Infrastructure station",
-        "IBSS (adhoc) station",
-        "Old lucent compatible adhoc demo",
-        "Software Access Point",
-        "Monitor mode"
-    };
-    
     uint32_t op = 0;
     a80211_getset(SIOCGA80211, APPLE80211_IOC_OP_MODE, &op, NULL, 0);
     
-    if (op == APPLE80211_M_NONE) {
-        ret = modes[0];
-    } else if (op == APPLE80211_M_STA) {
-        ret = modes[1];
-    } else if (op == APPLE80211_M_IBSS) {
-        ret = modes[2];
-    } else if (op == APPLE80211_M_AHDEMO) {
-        ret = modes[3];
-    } else if (op == APPLE80211_M_HOSTAP) {
-        ret = modes[4];
-    } else if (op == APPLE80211_M_MONITOR) {
-        ret = modes[5];
+    switch (op) {
+        case APPLE80211_M_NONE:
+            return "none";
+            break;
+        case APPLE80211_M_STA:
+            return "Infrastructure station";
+            break;
+        case APPLE80211_M_IBSS:
+            return "IBSS (adhoc) station";
+            break;
+        case APPLE80211_M_AHDEMO:
+            return "Old lucent compatible adhoc demo";
+            break;
+        case APPLE80211_M_HOSTAP:
+            return "Software Access Point";
+            break;
+        case APPLE80211_M_MONITOR:
+            return "Monitor Mode";
+            break;
+        default:
+            return "Unknown Mode";
+            break;
     }
-    
-    
-    
-    return (ret);
 }
 
-int APPLE80211_MODE_11AC = 0x80;
+static const int APPLE80211_MODE_11AC = 0x80;
 
 char * get_phymode()
 {
-    
-    char *modes[9] =
-    {
-        "unknown",
-        "auto",
-        "802.11a",
-        "802.11b",
-        "802.11g",
-        "802.11n",
-        "turbo a",
-        "turbo g",
-        "802.11ac"
-    };
-    
-    //uint32_t phy;
     struct apple80211_phymode_data phy;
     
     memset(&phy, 0, sizeof(phy));
     a80211_getset(SIOCGA80211, APPLE80211_IOC_PHY_MODE, 0, &phy, sizeof(phy));
     
-    //a80211_getset(SIOCGA80211, APPLE80211_IOC_PHY_MODE, &phy, NULL, 0);
-    
-    
-    
-    if (phy.active_phy_mode == APPLE80211_MODE_UNKNOWN) {
-        return (modes[0]);
-    } else if (phy.active_phy_mode  == APPLE80211_MODE_AUTO) {
-        return (modes[1]);
-    } else if (phy.active_phy_mode  == APPLE80211_MODE_11A) {
-        return (modes[2]);
-    } else if (phy.active_phy_mode  == APPLE80211_MODE_11B) {
-        return (modes[3]);
-    } else if (phy.active_phy_mode  == APPLE80211_MODE_11G) {
-        return (modes[4]);
-    }  else if (phy.active_phy_mode  == APPLE80211_MODE_11N) {
-        return (modes[5]);
-    } else if (phy.active_phy_mode  == APPLE80211_MODE_TURBO_A) {
-        return (modes[6]);
-    } else if (phy.active_phy_mode  == APPLE80211_MODE_TURBO_G) {
-        return (modes[7]);
-    } else if (phy.active_phy_mode == APPLE80211_MODE_11AC) {
-        return (modes[8]);
+    switch (phy.active_phy_mode) {
+        case APPLE80211_MODE_UNKNOWN:
+            return "Unknown";
+            break;
+        case APPLE80211_MODE_11A:
+            return "802.11a : 5GHz, OFDM";
+            break;
+        case APPLE80211_MODE_11B:
+            return "802.11b : 2GHz, CCK";
+            break;
+        case APPLE80211_MODE_11G:
+            return "802.11g : 2GHz, OFDM";
+            break;
+        case APPLE80211_MODE_11N:
+            return "802.11n : 2GHz/5Ghz, OFDM";
+            break;
+        case APPLE80211_MODE_TURBO_A:
+            return "Turbo a : 5GHz, OFDM, 2x clock";
+            break;
+        case APPLE80211_MODE_TURBO_G:
+            return "Turbo g : 2GHz, OFDM, 2x clock";
+            break;
+        case APPLE80211_MODE_11AC:
+            return "802.11ac : 5GHz";
+            break;
+        case APPLE80211_MODE_AUTO:
+            return "Auto";
+            break;
+        default:
+            return "Unrecognized";
+            break;
     }
-    return (modes[0]);
 }
 
 char *get_cipher()
