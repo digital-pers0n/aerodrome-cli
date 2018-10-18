@@ -249,38 +249,40 @@ char * get_phymode()
 
 char *get_cipher()
 {
-    char *modes[8] = {"none", "WEP 40", "WEP 104", "TKIP", "AES (OCB)", "AES (CCM)", "PMK", "PMKSA"};
-    //uint32_t mode;
-    
     struct apple80211_key mode;
     memset(&mode, 0, sizeof(mode));
     
     a80211_getset(SIOCGA80211, APPLE80211_IOC_CIPHER_KEY, 0, &mode, sizeof(mode));
     
-    
-    //a80211_getset(SIOCGA80211, APPLE80211_IOC_CIPHER_KEY, &mode, NULL, 0);
-    
-    if (mode.key_cipher_type == APPLE80211_CIPHER_NONE) {
-        return (modes[0]);
-    } else if (mode.key_cipher_type == APPLE80211_CIPHER_WEP_40) {
-        return (modes[1]);
-    } else if (mode.key_cipher_type == APPLE80211_CIPHER_WEP_104) {
-        return (modes[2]);
-    } else if (mode.key_cipher_type == APPLE80211_CIPHER_TKIP) {
-        return (modes[3]);
-    } else if (mode.key_cipher_type == APPLE80211_CIPHER_AES_OCB) {
-        return (modes[4]);
-    } else if (mode.key_cipher_type == APPLE80211_CIPHER_AES_CCM) {
-        return (modes[5]);
-    } else if (mode.key_cipher_type == APPLE80211_CIPHER_PMK) {
-        return (modes[6]);
-    } else if (mode.key_cipher_type == APPLE80211_CIPHER_PMKSA) {
-        return (modes[7]);
+    switch (mode.key_cipher_type) {
+        case APPLE80211_CIPHER_NONE:
+            return "Open Network";
+            break;
+        case APPLE80211_CIPHER_WEP_40:
+            return "40 bit WEP";
+            break;
+        case APPLE80211_CIPHER_WEP_104:
+            return "104 bit WEP";
+            break;
+        case APPLE80211_CIPHER_TKIP:
+            return "TKIP (WPA)";
+            break;
+        case APPLE80211_CIPHER_AES_OCB:
+            return "AES (OCB)";
+            break;
+        case APPLE80211_CIPHER_AES_CCM:
+            return "AES (CCM)";
+            break;
+        case APPLE80211_CIPHER_PMK:
+            return "PMK";
+            break;
+        case APPLE80211_CIPHER_PMKSA:
+            return "PMKSA";
+            break;
+        default:
+            return "Unknown";
+            break;
     }
-    
-    
-    
-    return (modes[0]);
 }
 
 int get_rate()
@@ -309,56 +311,33 @@ int get_supported_rate()
     printf("Supported rates (Mbps): ");
     
     for (int i = 0; i < APPLE80211_MAX_RATES; i++) {
-        if (data.rates[i].rate == 0) {
-            ;
-        } else {
+        if (data.rates[i].rate != 0) {
             printf("%i ",  data.rates[i].rate);
         }
     }
-    printf(" \n");
+    putchar('\n');
     
     return rates = data.num_rates;
 }
 
 int get_rssi()
 {
-    int32_t rssi = 0;
-    
     struct apple80211_rssi_data data;
-    
     memset(&data, 0, sizeof(data));
     
     a80211_getset(SIOCGA80211, APPLE80211_IOC_RSSI, 0, &data, sizeof(data));
     
-    if (data.rssi[0] > 0) {
-        return rssi;
-    }
-    
-    rssi = data.rssi[0];
-    
-    
-    
-    
-    return rssi;
+    return data.rssi[0];
 }
 
 int get_noise()
 {
-    int32_t noise = 0;
-    
-    
     struct apple80211_noise_data ns;
     memset(&ns, 0, sizeof(ns));
     
     a80211_getset(SIOCGA80211, APPLE80211_IOC_NOISE, 0, &ns, sizeof(ns));
     
-    if (ns.noise[0] > 0) {
-        return noise;
-    }
-    
-    noise = ns.noise[0];
-    
-    return noise;
+    return ns.noise[0];
 }
 
 
@@ -459,66 +438,56 @@ int multiple_scan()
 }
 
 
-
-
-
-int get_auth(char *auth[])
-{
-    int ret;
-    
-    char *auth_lower[3]    =
-    {
-        "Open",
-        "Shared",
-        "CISCO"
-    };
-    
-    char *auth_upper[8] =
-    {
-        "None",
-        "WPA",
-        "WPA PSK",
-        "WPA2",
-        "WPA2 PSK",
-        "LEAP",
-        "802.1X",
-        "WPS"
-    };
-    
-    struct apple80211_authtype_data ath;
-    
-    memset(&ath, 0, sizeof(ath));
-    
-    ret = a80211_getset(SIOCGA80211, APPLE80211_IOC_AUTH_TYPE, 0, &ath, sizeof(ath));
-    
-    
-    
-    if (ath.authtype_lower == APPLE80211_AUTHTYPE_OPEN) {
-        auth[0] = auth_lower[0];
-    } else if (ath.authtype_lower == APPLE80211_AUTHTYPE_SHARED) {
-        auth[0] = auth_lower[1];
-    } else if (ath.authtype_lower == APPLE80211_AUTHTYPE_CISCO) {
-        auth[0] = auth_lower[2];
+int get_auth(char **lower, char **upper) {
+    struct apple80211_authtype_data data;
+    memset(&data, 0, sizeof(data));
+    int ret = a80211_getset(SIOCGA80211, APPLE80211_IOC_AUTH_TYPE, 0, &data, sizeof(data));
+    switch (data.authtype_lower) {
+        case APPLE80211_AUTHTYPE_OPEN:
+            *lower = "Open";
+            break;
+        case APPLE80211_AUTHTYPE_SHARED:
+            *lower = "Shared Key";
+            break;
+        case APPLE80211_AUTHTYPE_CISCO:
+            *lower = "CISCO";
+            break;
+            
+        default:
+            *lower = "Unknown";
+            break;
     }
     
-    if (ath.authtype_upper == APPLE80211_AUTHTYPE_NONE) {
-        auth[1] = auth_upper[0];
-    } else if (ath.authtype_upper == APPLE80211_AUTHTYPE_WPA) {
-        auth[1] = auth_upper[1];
-    } else if (ath.authtype_upper == APPLE80211_AUTHTYPE_WPA_PSK) {
-        auth[1] = auth_upper[2];
-    } else if (ath.authtype_upper == APPLE80211_AUTHTYPE_WPA2) {
-        auth[1] = auth_upper[3];
-    } else if (ath.authtype_upper == APPLE80211_AUTHTYPE_WPA2_PSK) {
-        auth[1] = auth_upper[4];
-    } else if (ath.authtype_upper == APPLE80211_AUTHTYPE_LEAP) {
-        auth[1] = auth_upper[5];
-    } else if (ath.authtype_upper == APPLE80211_AUTHTYPE_8021X) {
-        auth[1] = auth_upper[6];
-    } else if (ath.authtype_upper == APPLE80211_AUTHTYPE_WPS) {
-        auth[1] = auth_upper[7];
+    switch (data.authtype_upper) {
+        case APPLE80211_AUTHTYPE_NONE:
+            *upper = "None";
+            break;
+        case APPLE80211_AUTHTYPE_WPA:
+            *upper = "WPA";
+            break;
+        case APPLE80211_AUTHTYPE_WPA_PSK:
+            *upper = "WPA PSK";
+            break;
+        case APPLE80211_AUTHTYPE_WPA2:
+            *upper = "WPA2";
+            break;
+        case APPLE80211_AUTHTYPE_WPA2_PSK:
+            *upper = "WPA2 PSK";
+            break;
+        case APPLE80211_AUTHTYPE_LEAP:
+            *upper = "LEAP";
+            break;
+        case APPLE80211_AUTHTYPE_8021X:
+            *upper = "802.1x";
+            break;
+        case APPLE80211_AUTHTYPE_WPS:
+            *upper = "WPS";
+            break;
+            
+        default:
+            *upper = "Unknown";
+            break;
     }
-    
     return ret;
 }
 
