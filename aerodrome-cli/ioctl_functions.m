@@ -57,20 +57,15 @@ int a80211_getset(uint32_t ioc, uint32_t type, uint32_t *valuep, void *data, siz
     errno = 0;
     int ret = ioctl(a80211_sock, ioc, &cmd, sizeof(cmd));
     
-
     if (ret < 0) {
-        
-        //perror("");
-        //printf("req_type: %i\n", type);
-        
+        fprintf(stderr, "%s: %s\n", __func__, strerror(errno));
     }
 
-    
-    if (valuep)
+    if (valuep) {
         *valuep = cmd.req_val;
-        
-        close(a80211_sock);
-        return ret;
+    }
+    close(a80211_sock);
+    return ret;
 }
 
 int get_channel(struct apple80211_channel *chan)
@@ -493,8 +488,6 @@ int get_auth(char **lower, char **upper) {
 
 int get_channels_num()
 {
-    
-    int channel = 0;
     struct apple80211_sup_channel_data data;
     memset(&data, 0, sizeof(data));
     
@@ -502,15 +495,13 @@ int get_channels_num()
     
     printf("Supported channels: ");
     for (int i = 0; i < APPLE80211_MAX_CHANNELS ; i++) {
-        if (data.supported_channels[i].channel == 0) {
-            ;
-        } else {
+        if (data.supported_channels[i].channel != 0) {
             printf("%i ",  data.supported_channels[i].channel);
         }
     }
-    printf("\n");
+    putchar('\n');
     
-    return channel = data.num_channels;
+    return data.num_channels;
 }
 
 
@@ -523,44 +514,52 @@ void get_driver_version()
     a80211_getset(SIOCGA80211, APPLE80211_IOC_DRIVER_VERSION, 0, &version, sizeof(version));
     
     printf("%s\n", version);
-    
 }
 
-int get_powersave_mode(char *val[])
+int get_powersave_mode(char **val)
 {
     uint32_t value = 0;
-    
-    char * modes[5] =
-    {
-        "Disabled",
-        "80211",
-        "Vendor Specific",
-        "Throughput is maximized",
-        "Power savings are maximized"
-        
-    };
-    
+
     a80211_getset(SIOCGA80211, APPLE80211_IOC_POWERSAVE, &value, NULL, 0);
     
-    if (value == APPLE80211_POWERSAVE_MODE_DISABLED) {
-        val[0] = modes[0];
-    } else if (value == APPLE80211_POWERSAVE_MODE_80211){
-        val[0] = modes[1];
-    } else if (value == APPLE80211_POWERSAVE_MODE_VENDOR){
-        val[0] = modes[2];
-    } else if (value == APPLE80211_POWERSAVE_MODE_MAX_THROUGHPUT){
-        val[0] = modes[3];
-    } else if (value == APPLE80211_POWERSAVE_MODE_MAX_POWERSAVE) {
-        val[0] = modes[4];
+    switch (value) {
+        case APPLE80211_POWERSAVE_MODE_DISABLED:
+            *val = "Disabled";
+            break;
+        case APPLE80211_POWERSAVE_MODE_80211:
+            *val = "80211";
+            break;
+        case APPLE80211_POWERSAVE_MODE_VENDOR:
+            *val = "Vendor Specific";
+            break;
+        case APPLE80211_POWERSAVE_MODE_MIMO_STATIC:
+            *val = "Mimo Static";
+            break;
+        case APPLE80211_POWERSAVE_MODE_MIMO_DYNAMIC:
+            *val = "Mimo Dynamic";
+            break;
+        case APPLE80211_POWERSAVE_MODE_MIMO_MIMO:
+            *val = "Mimo Mimo";
+            break;
+        case APPLE80211_POWERSAVE_MODE_WOW:
+            *val = "WOW";
+            break;
+        case APPLE80211_POWERSAVE_MODE_MAX_THROUGHPUT:
+            *val = "Throughput is maximized";
+            break;
+        case APPLE80211_POWERSAVE_MODE_MAX_POWERSAVE:
+            *val = "Power savings are maximized";
+            break;
+            
+        default:
+            *val = "Unknown";
+            break;
     }
-    
     return value;
-    
 }
 
 void set_powersave_mode(uint32_t value)
 {
-    
     a80211_getset(SIOCSA80211, APPLE80211_IOC_POWERSAVE, &value, NULL, 0);
 }
 
@@ -570,13 +569,10 @@ void get_hardware_info()
     
     get_powersave_mode(&powersave);
     
-    char *buffer[32];
+    char buffer[APPLE80211_MAX_VERSION_LEN * 2];
     //bzero(&buffer, sizeof(buffer));
     memset(&buffer, '\0', sizeof(buffer));
     a80211_getset(SIOCGA80211, APPLE80211_IOC_HARDWARE_VERSION, 0, &buffer, sizeof(buffer));
-    
-    
-    
     
     printf("\nHardware info: ");
     get_driver_version();
@@ -585,17 +581,13 @@ void get_hardware_info()
     printf("%s",  (char *)buffer);
     
     printf("\n");
-    
 }
 
 void get_info()
 {
-
-    
-    char *nm[32];
-    memset(&nm, 0, sizeof(nm));
-    get_ssid((char *)&nm);
-    
+    char nm[APPLE80211_MAX_SSID_LEN];
+    memset(nm, 0, sizeof(nm));
+    get_ssid(nm);
     
     struct ether_addr addr;
     memset(&addr, 0, sizeof(addr));
@@ -610,18 +602,14 @@ void get_info()
     char *opmode    = get_opmode();
     char *phymode   = get_phymode();
     char *cipher    = get_cipher();
-    char *driver[32];
-    memset(&driver, 0, sizeof(driver));
-    
-    
+
     int rate = get_rate();
     int rssi = get_rssi();
     
-    
     char *auth[2];
-    get_auth(auth);
+    get_auth(auth, auth + 1);
     
-    printf("\n");
+    putchar('\n');
     
     printf("       SSID: %s\n"
            "      BSSID: %02x:%02x:%02x:%02x:%02x:%02x\n"
@@ -653,6 +641,4 @@ void get_info()
            auth[1],
            cipher
            );
-    
-    
 }
