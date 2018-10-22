@@ -229,9 +229,8 @@ boolean_t aerodrome_power_cycle(Apple80211Ref ref)
 
 boolean_t aerodrome_ibss_create(Apple80211Ref ref, const char * network, int channel)
 {
-    int default_channel = AERODROME_DEFAULT_CHANNEL;
-    if (channel > 0) {
-        default_channel = channel;
+    if (channel == 0) {
+        channel = AERODROME_DEFAULT_CHANNEL;
     }
     
     Apple80211Err error;
@@ -241,14 +240,15 @@ boolean_t aerodrome_ibss_create(Apple80211Ref ref, const char * network, int cha
     
     int auth_low = APPLE80211_AUTHTYPE_OPEN,
     auth_up = APPLE80211_AUTHTYPE_NONE,
-    chan = default_channel,
-    chan_flag = 138,
+    chan_flag = (channel > 11) ? APPLE80211_C_FLAG_5GHZ : APPLE80211_C_FLAG_2GHZ,
     ciph = APPLE80211_CIPHER_NONE,
     phy_mode = APPLE80211_MODE_AUTO;
     
+    chan_flag |= APPLE80211_C_FLAG_IBSS | APPLE80211_C_FLAG_20MHZ;
+    
     Keys[0] = CFSTR("AP_MODE_AUTH_LOWER");  Values[0] = (void *)CFNumberCreate(kCFAllocatorDefault, 9, &auth_low);
     Keys[1] = CFSTR("AP_MODE_AUTH_UPPER");  Values[1] = (void *)CFNumberCreate(kCFAllocatorDefault, 9, &auth_up);
-    Keys[2] = CFSTR("CHANNEL");             Values[2] = (void *)CFNumberCreate(kCFAllocatorDefault, 9, &chan);
+    Keys[2] = CFSTR("CHANNEL");             Values[2] = (void *)CFNumberCreate(kCFAllocatorDefault, 9, &channel);
     Keys[3] = CFSTR("CHANNEL_FLAGS");       Values[3] = (void *)CFNumberCreate(kCFAllocatorDefault, 9, &chan_flag);
     Keys[4] = CFSTR("AP_MODE_CYPHER_TYPE"); Values[4] = (void *)CFNumberCreate(kCFAllocatorDefault, 9, &ciph);
     Keys[5] = CFSTR("SSID");                Values[5] = (void *)ssid;
