@@ -493,14 +493,18 @@ int get_channels_num()
     
     a80211_getset(SIOCGA80211, APPLE80211_IOC_SUPPORTED_CHANNELS, 0, &data, sizeof(data));
     
+    uint32_t previous_channel = 0, channel = 0;
     printf("Supported channels: ");
-    for (int i = 0; i < APPLE80211_MAX_CHANNELS ; i++) {
-        if (data.supported_channels[i].channel != 0) {
-            printf("%i ",  data.supported_channels[i].channel);
+    for (int i = 0; i < data.num_channels; i++) {
+        channel = data.supported_channels[i].channel;
+        if (channel == 0 || previous_channel > channel) {
+            break;
         }
+        printf("%i ", channel);
+        previous_channel = channel;
     }
     putchar('\n');
-    
+
     return data.num_channels;
 }
 
