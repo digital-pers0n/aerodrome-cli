@@ -201,6 +201,39 @@ char * get_opmode()
 
 static const int APPLE80211_MODE_11AC = 0x80;
 
+void get_supported_phymodes() {
+    struct apple80211_phymode_data data;
+    char modes[32] = {0};
+    
+    memset(&data, 0, sizeof(data));
+    a80211_getset(SIOCGA80211, APPLE80211_IOC_PHY_MODE, 0, &data, sizeof(data));
+
+    uint32_t phy_mode = data.phy_mode;
+    if (phy_mode & APPLE80211_MODE_11A) {
+        strcat(modes, "a/");
+    }
+    if (phy_mode & APPLE80211_MODE_11B) {
+        strcat(modes, "b/");
+    }
+    if (phy_mode & APPLE80211_MODE_11G) {
+        strcat(modes, "g/");
+    }
+    if (phy_mode & APPLE80211_MODE_11N) {
+        strcat(modes, "n/");
+    }
+    if (phy_mode & APPLE80211_MODE_TURBO_A) {
+        strcat(modes, "turbo a/");
+    }
+    if (phy_mode & APPLE80211_MODE_TURBO_G) {
+        strcat(modes, "turbo g/");
+    }
+    if (phy_mode & APPLE80211_MODE_11AC) {
+        strcat(modes, "ac");
+    }
+    printf("Supported PHY Modes: 802.11 %s\n", modes);
+    
+}
+
 char * get_phymode()
 {
     struct apple80211_phymode_data phy;
@@ -580,6 +613,7 @@ void get_hardware_info()
     
     printf("\nHardware info: ");
     get_driver_version();
+    get_supported_phymodes();
     get_channels_num();
     printf("Powersave Mode: %s\n", powersave);
     printf("%s",  (char *)buffer);
