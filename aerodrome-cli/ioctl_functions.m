@@ -338,7 +338,7 @@ int get_supported_rate()
     
     printf("Supported rates (Mbps): ");
     
-    for (int i = 0; i < APPLE80211_MAX_RATES; i++) {
+    for (int i = 0; i < data.num_rates; i++) {
         if (data.rates[i].rate != 0) {
             printf("%i ",  data.rates[i].rate);
         }
