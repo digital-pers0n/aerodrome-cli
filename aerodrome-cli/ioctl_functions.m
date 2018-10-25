@@ -680,3 +680,31 @@ void get_info()
            cipher
            );
 }
+
+#pragma mark - Power
+
+int get_power(struct apple80211_power_data *data) {
+    return a80211_getset(SIOCGA80211, APPLE80211_IOC_POWER, 0, data, sizeof(*data));
+}
+
+int set_power(struct apple80211_power_data *data) {
+    return a80211_getset(SIOCSA80211, APPLE80211_IOC_POWER, 0, data, sizeof(*data));
+}
+
+bool power_cycle() {
+    struct apple80211_power_data data;
+    uint32_t state = 0;
+    memset(&data, 0, sizeof(data));
+    
+    get_power(&data);
+    if (data.power_state[0] == 0) {
+        state = 1;
+    }
+    for (uint32_t i = 0; i < data.num_radios; i++) {
+        data.power_state[i] = state;
+    }
+    set_power(&data);
+    
+    printf("Power state is %s\n", (state) ? "on" : "off");
+    return state;
+}

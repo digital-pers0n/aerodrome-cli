@@ -85,4 +85,6 @@ void    get_hardware_info();
 
 void    get_info();
 
+bool    power_cycle();
+
 #endif /* Aerodrome_h */
