@@ -19,7 +19,7 @@
 #import "apple80211_ioctl.h"
 #import "apple80211_wps.h"
 
-char * g_if_name;
+char g_if_name[IF_NAMESIZE] = {0};
 
 struct apple80211_scan_multiple_data {
     uint32_t version; // 0
