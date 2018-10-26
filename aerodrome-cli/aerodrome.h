@@ -18,7 +18,7 @@
 
 boolean_t       aerodrome_bind(const char *if_name, Apple80211Ref *ref_ptr);
 
-const char *    aerodrome_auto_bind(Apple80211Ref *ref_ptr);
+boolean_t       aerodrome_auto_bind(Apple80211Ref *ref_ptr);
 
 void            aerodrome_close(Apple80211Ref ref);
 

@@ -58,59 +58,38 @@ boolean_t aerodrome_bind(const char *if_name, Apple80211Ref *ref_ptr)
     return (found);
 }
 
-const char * aerodrome_auto_bind(Apple80211Ref *ref_ptr)
+boolean_t aerodrome_auto_bind(Apple80211Ref *ref)
 {
- 
-    long			count;
-    Apple80211Err	error;
-    CFArrayRef		if_name_list;
-    const char *	ret_name = NULL;
-    Apple80211Ref	wref;
-    
-    error = Apple80211Open(&wref);
+    Apple80211Err error = Apple80211Open(ref);
     if (error != kA11NoErr) {
         fprintf(stderr, "Apple80211Open failed: %x %s\n", error, Apple80211ErrToStr(error));
-        return (NULL);
+        return false;
     }
-    error = Apple80211GetIfListCopy(wref, &if_name_list);
-    if (error != kA11NoErr) {
+    
+    CFArrayRef if_name_array;
+    if ((error = Apple80211GetIfListCopy(*ref, &if_name_array)) != kA11NoErr) {
         fprintf(stderr, "Apple80211GetIfListCopy failed: %x %s\n", error, Apple80211ErrToStr(error));
-        goto done;
+        Apple80211Close(*ref);
+        *ref = NULL;
+        return false;
     }
-    count = CFArrayGetCount(if_name_list);
-    if (count > 0) {
-        CFStringRef	if_name;
-        
-        if_name = CFArrayGetValueAtIndex(if_name_list, 0);
-        //CFShow(if_name);
-        error = Apple80211BindToInterface(wref, if_name);
-        if (error != kA11NoErr) {
+    
+    Boolean success = false;
+    if (CFArrayGetCount(if_name_array)) {
+        CFStringRef if_name = CFArrayGetValueAtIndex(if_name_array, 0);
+        if ((error = Apple80211BindToInterface(*ref, if_name)) != kA11NoErr ) {
             fprintf(stderr, "Apple80211BindToInterface failed: %x %s\n",
                     error, Apple80211ErrToStr(error));
         } else {
-            ret_name = CFStringGetCStringPtr(if_name, kCFStringEncodingASCII);
-             
-            }
+            success = CFStringGetCString(if_name, g_if_name, IF_NAMESIZE, kCFStringEncodingASCII);
+        }
     }
-    
-    
-    
-done:
-    if (ret_name == NULL) {
-        Apple80211Close(wref);
-        *ref_ptr = NULL;
-        
+    if (!success) {
+        Apple80211Close(*ref);
+        *ref = NULL;
     }
-    else {
-        
-        *ref_ptr = wref;
-        g_if_name = (char *)ret_name;
-        return (ret_name);
-    }
-    
-    CFRelease(if_name_list);
-    
-    return (ret_name);
+    CFRelease(if_name_array);
+    return success;
 }
 
 void aerodrome_close(Apple80211Ref ref)
