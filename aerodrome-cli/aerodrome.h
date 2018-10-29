@@ -87,4 +87,6 @@ void    get_info();
 
 bool    power_cycle();
 
+void    get_transfer_stats();
+
 #endif /* Aerodrome_h */

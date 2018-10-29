@@ -231,8 +231,19 @@ void get_supported_phymodes() {
         strcat(modes, "ac");
     }
     printf("Supported PHY Modes: 802.11 %s\n", modes);
-    
 }
+
+void get_transfer_stats() {
+    struct apple80211_stats_data data;
+    memset(&data, 0, sizeof(data));
+    a80211_getset(SIOCGA80211, APPLE80211_IOC_STATS, 0, &data, sizeof(data));
+    printf("Sent Packets: %u\n"
+           " Send Errors: %u\n"
+           "Recv Packets: %u\n"
+           " Recv Errors: %u\n",
+           data.tx_frame_count, data.tx_errors, data.rx_frame_count, data.rx_errors);
+}
+
 
 char * get_phymode()
 {
