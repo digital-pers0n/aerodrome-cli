@@ -89,4 +89,8 @@ bool    power_cycle();
 
 void    get_transfer_stats();
 
+int     get_mcs_index();
+
+int     set_mcs_index(uint32_t mcs);
+
 #endif /* Aerodrome_h */

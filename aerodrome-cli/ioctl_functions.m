@@ -719,3 +719,17 @@ bool power_cycle() {
     printf("Power state is %s\n", (state) ? "on" : "off");
     return state;
 }
+
+#pragma mark - mcs
+
+int get_mcs_index() {
+    uint32_t mcs = 0;
+    a80211_getset(SIOCGA80211, APPLE80211_IOC_MCS, &mcs, NULL, 0);
+    return mcs;
+}
+
+int set_mcs_index(uint32_t mcs) {
+    return a80211_getset(SIOCSA80211, APPLE80211_IOC_MCS, &mcs, NULL, 0);
+}
+
+
