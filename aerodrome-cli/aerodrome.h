@@ -93,4 +93,8 @@ int     get_mcs_index();
 
 int     set_mcs_index(uint32_t mcs);
 
+char    *get_ap_mode();
+
+int     set_ap_mode(uint32_t ap_mode);
+
 #endif /* Aerodrome_h */

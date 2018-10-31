@@ -732,4 +732,31 @@ int set_mcs_index(uint32_t mcs) {
     return a80211_getset(SIOCSA80211, APPLE80211_IOC_MCS, &mcs, NULL, 0);
 }
 
+#pragma mark - ap mode
+
+char *get_ap_mode() {
+    uint32_t ap = 0;
+    a80211_getset(SIOCGA80211, APPLE80211_IOC_AP_MODE, &ap, 0, 0);
+    
+    switch (ap) {
+        case APPLE80211_AP_MODE_UNKNOWN:
+            return "Unknown AP Mode";
+            break;
+        case APPLE80211_AP_MODE_IBSS:
+            return "IBSS (adhoc) station";
+            break;
+        case APPLE80211_AP_MODE_INFRA:
+            return "Access Point";
+            break;
+        case APPLE80211_AP_MODE_ANY:
+            return "Any supported mode";
+            break;
+    }
+    return "Unknown AP Mode";
+}
+
+int set_ap_mode(uint32_t ap_mode) {
+    return a80211_getset(SIOCSA80211, APPLE80211_IOC_AP_MODE, &ap_mode, 0, 0);
+}
+
 
