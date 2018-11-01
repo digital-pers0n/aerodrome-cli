@@ -97,4 +97,13 @@ char    *get_ap_mode();
 
 int     set_ap_mode(uint32_t ap_mode);
 
+/**
+ @param cc must contain enough space to hold APPLE80211_MAX_CC_LEN number of characters
+ */
+void    get_country_code(char *cc);
+/**
+ @param cc must contain enough space to hold APPLE80211_MAX_CC_LEN number of characters
+ */
+void    set_country_code(char *cc);
+
 #endif /* Aerodrome_h */

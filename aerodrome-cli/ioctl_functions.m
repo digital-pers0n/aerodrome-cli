@@ -759,4 +759,24 @@ int set_ap_mode(uint32_t ap_mode) {
     return a80211_getset(SIOCSA80211, APPLE80211_IOC_AP_MODE, &ap_mode, 0, 0);
 }
 
+#pragma mark - Country Code
+
+struct aerodrome_country_code_data {
+    char cc[APPLE80211_MAX_CC_LEN];
+};
+
+void get_country_code(char *cc) {
+    struct aerodrome_country_code_data data;
+    memset(&data, 0, sizeof(data));
+    a80211_getset(SIOCGA80211, APPLE80211_IOC_COUNTRY_CODE, 0, &data, sizeof(data));
+    strncpy(cc, data.cc, APPLE80211_MAX_CC_LEN);
+}
+
+void set_country_code(char *cc) {
+    struct aerodrome_country_code_data data;
+    memset(&data, 0, sizeof(data));
+    strncpy(data.cc, cc, APPLE80211_MAX_CC_LEN);
+    a80211_getset(SIOCSA80211, APPLE80211_IOC_COUNTRY_CODE, 0, &data, sizeof(data));
+}
+
 
