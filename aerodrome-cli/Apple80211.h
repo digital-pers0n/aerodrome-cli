@@ -4,14 +4,17 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2015 by Steve Nygard.
 //
 
-#import <Foundation/NSObject.h>
+#pragma once
 
-extern char * g_if_name;
+#import <Foundation/NSObject.h>
+#import <net/if.h>
+
+extern char g_if_name[IF_NAMESIZE];
 
 struct Apple80211;
 typedef struct Apple80211 *Apple80211Ref;
 
-int Apple80211Open(Apple80211Ref *handle); //Open Conection
+int Apple80211Open(Apple80211Ref *handle); //Open Connection
 int Apple80211Close(Apple80211Ref handle);
 int Apple80211BindToInterface(Apple80211Ref handle, CFStringRef interface);
 int Apple80211Scan(Apple80211Ref handle, CFArrayRef *scanResult, CFDictionaryRef parametrs);
@@ -19,8 +22,6 @@ int Apple80211Scan(Apple80211Ref handle, CFArrayRef *scanResult, CFDictionaryRef
 int Apple80211SetPower(Apple80211Ref handle, uint32_t power);
 int Apple80211GetPower(Apple80211Ref wref, uint32_t *power);
 //int Apple80211Set(Apple80211Ref handle, CFStringRef str, uint32_t val);
-int ACInterfaceCopyInfo();
-int ACNetworkCreate(CFStringRef ssid);
 
 int Apple80211Disassociate(Apple80211Ref wref);
 int Apple80211Associate(Apple80211Ref handle, CFDictionaryRef SSID, CFStringRef pass);
