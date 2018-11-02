@@ -631,7 +631,28 @@ void get_hardware_info()
     printf("Powersave Mode: %s\n", powersave);
     printf("%s",  (char *)buffer);
     
-    printf("\n");
+    putchar('\n');
+
+}
+
+static inline int get_channel_wide(uint32_t flags) {
+    if (flags & APPLE80211_C_FLAG_10MHZ) {
+        return 10;
+    }
+    if (flags & APPLE80211_C_FLAG_20MHZ) {
+        return 20;
+    }
+    if (flags & APPLE80211_C_FLAG_40MHZ) {
+        return 40;
+    }
+    if (flags & 0x400) {
+        return 80;
+    }
+    return 0;
+}
+
+static inline float get_channel_freq(uint32_t flags) {
+    return (flags & APPLE80211_C_FLAG_5GHZ) ? 5.0f : 2.4f;
 }
 
 void get_info()
@@ -664,7 +685,7 @@ void get_info()
     
     printf("       SSID: %s\n"
            "      BSSID: %02x:%02x:%02x:%02x:%02x:%02x\n"
-           "    Channel: %i\n"
+           "    Channel: %i (%g GHz, %i MHz)\n"
            "     Locale: %s\n"
            "    txPower: %i mW\n"
            "      State: %s\n"
@@ -679,7 +700,7 @@ void get_info()
            ,
            (char *)nm,
            addr.octet[0], addr.octet[1], addr.octet[2], addr.octet[3], addr.octet[4], addr.octet[5],
-           chan.channel,
+           chan.channel, get_channel_freq(chan.flags), get_channel_wide(chan.flags),
            locale,
            tx,
            state,
