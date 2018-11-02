@@ -57,10 +57,12 @@ int a80211_getset(uint32_t ioc, uint32_t type, uint32_t *valuep, void *data, siz
     errno = 0;
     int ret = ioctl(a80211_sock, ioc, &cmd, sizeof(cmd));
     
+#if DEBUG
     if (ret < 0) {
-        fprintf(stderr, "%s: %s\n", __func__, strerror(errno));
+        fprintf(stderr, "%s: %i - %s\n", __func__, errno, strerror(errno));
     }
-
+#endif
+    
     if (valuep) {
         *valuep = cmd.req_val;
     }
@@ -110,7 +112,7 @@ char *get_locale()
             return "X1 (APAC)";
             break;
         case APPLE80211_LOCALE_ROW:
-            return "X3 (ROW)";
+            return "X2 (ROW)";
             break;
             
         default:
