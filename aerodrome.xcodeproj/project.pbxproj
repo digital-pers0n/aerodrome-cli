@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE2FA55B1C46BF770016F4A0 /* AirPort.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE81BC161C36FA4F007771DB /* AirPort.framework */; };
+		CE6333EB21629D0600BDDF7C /* Apple80211.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2FA5571C401CB60016F4A0 /* Apple80211.framework */; };
 		CE81BC041C36CC85007771DB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81BC031C36CC85007771DB /* main.m */; };
-		CE81BC0B1C36CEC4007771DB /* aerodrome.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81BC0A1C36CEC4007771DB /* aerodrome.m */; settings = {ASSET_TAGS = (); }; };
-		CE81BC0E1C36CF41007771DB /* ioctl_functions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81BC0D1C36CF41007771DB /* ioctl_functions.m */; settings = {ASSET_TAGS = (); }; };
+		CE81BC0B1C36CEC4007771DB /* aerodrome.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81BC0A1C36CEC4007771DB /* aerodrome.m */; };
+		CE81BC0E1C36CF41007771DB /* ioctl_functions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81BC0D1C36CF41007771DB /* ioctl_functions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,7 +26,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		CE2FA5571C401CB60016F4A0 /* Apple80211.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apple80211.framework; path = ../../../../../System/Library/PrivateFrameworks/Apple80211.framework; sourceTree = "<group>"; };
+		CE2FA5571C401CB60016F4A0 /* Apple80211.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apple80211.framework; path = ../../../../../../System/Library/PrivateFrameworks/Apple80211.framework; sourceTree = "<group>"; };
 		CE81BC001C36CC85007771DB /* aerodrome */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = aerodrome; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE81BC031C36CC85007771DB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CE81BC0A1C36CEC4007771DB /* aerodrome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = aerodrome.m; sourceTree = "<group>"; };
@@ -37,7 +37,6 @@
 		CE81BC111C36D012007771DB /* apple80211_wps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = apple80211_wps.h; sourceTree = "<group>"; };
 		CE81BC121C36D012007771DB /* Apple80211.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Apple80211.h; sourceTree = "<group>"; };
 		CE81BC131C36D012007771DB /* Apple80211Err.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Apple80211Err.h; sourceTree = "<group>"; };
-		CE81BC161C36FA4F007771DB /* AirPort.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AirPort.framework; path = ../../../../../System/Library/PrivateFrameworks/AirPort.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,7 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE2FA55B1C46BF770016F4A0 /* AirPort.framework in Frameworks */,
+				CE6333EB21629D0600BDDF7C /* Apple80211.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,7 +55,6 @@
 			isa = PBXGroup;
 			children = (
 				CE2FA5571C401CB60016F4A0 /* Apple80211.framework */,
-				CE81BC161C36FA4F007771DB /* AirPort.framework */,
 				CE81BC021C36CC85007771DB /* aerodrome-cli */,
 				CE81BC011C36CC85007771DB /* Products */,
 			);
@@ -231,6 +229,7 @@
 		CE81BC081C36CC85007771DB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = Terminator;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
@@ -242,6 +241,7 @@
 		CE81BC091C36CC85007771DB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = Terminator;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
